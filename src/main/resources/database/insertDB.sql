@@ -1,0 +1,1 @@
+INSERT INTO contact VALUES (1, 'Geoge', '20', 'Irkutsk, 25');
