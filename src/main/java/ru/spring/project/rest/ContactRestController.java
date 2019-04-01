@@ -20,41 +20,58 @@ public class ContactRestController {
 
     //Get
     @RequestMapping(value = "/contacts/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Contact> getCustomer(@PathVariable("id") Long customerId) {
+    public ResponseEntity<Contact> getContact(@PathVariable("id") Long customerId) {
         if (customerId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Contact customer = this.contactService.getById(customerId);
-        return new ResponseEntity<>(customer, HttpStatus.OK);
+        Contact contact = this.contactService.getById(customerId);
+        if (contact == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(contact, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/contacts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<Contact>> getAllCustomers() {
-        List<Contact> customers = this.contactService.getAll();
-        if (customers.isEmpty()) {
+    public ResponseEntity<List<Contact>> getAllContacts() {
+        List<Contact> contacts = this.contactService.getAll();
+        if (contacts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(customers, HttpStatus.OK);
+        return new ResponseEntity<>(contacts, HttpStatus.OK);
     }
 
     //post
     @RequestMapping(value = "/contacts", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Contact> saveCustomer(@RequestBody @Valid Contact customer) {
+    public ResponseEntity<Contact> saveContact(@RequestBody @Valid Contact contact) {
         HttpHeaders headers = new HttpHeaders();
 
-        if (customer == null) {
+        if (contact == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        this.contactService.save(customer);
-        return new ResponseEntity<>(customer, headers, HttpStatus.CREATED);
+        this.contactService.save(contact);
+        return new ResponseEntity<>(contact, headers, HttpStatus.CREATED);
+    }
+
+    //put
+    @RequestMapping(value = "/contacts", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public  ResponseEntity<Contact> updateContact(@RequestBody @Valid Contact contact){
+        HttpHeaders headers = new HttpHeaders();
+
+        if (contact == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        this.contactService.save(contact);
+        return new ResponseEntity<>(contact, headers, HttpStatus.OK);
+
     }
 
     //delete
     @RequestMapping(value = "/contacts/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Contact> deleteCustomer(@PathVariable("id") Long id) {
-        Contact customer = this.contactService.getById(id);
-        if (customer == null) {
+    public ResponseEntity<Contact> deleteContact(@PathVariable("id") Long id) {
+        Contact contact = this.contactService.getById(id);
+        if (contact == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 

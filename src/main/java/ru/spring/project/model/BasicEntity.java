@@ -1,13 +1,16 @@
 package ru.spring.project.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.springframework.data.annotation.Id;
+import lombok.*;
+
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
+//@AllArgsConstructor автоматически создает констр-ор класса со всеми аргументами
+//@NoArgsConstructor автоматически создает пустой конструктор класса со всеми аргументами
+//@Data создает toString, equals, hashCode, getters, setters.
 
 
 @Getter
